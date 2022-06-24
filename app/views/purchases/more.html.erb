@@ -1,0 +1,100 @@
+
+
+<style media="screen">
+  /* Centered text */
+.centered {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+</style>
+<center>
+    <h1>
+      <% if params[:locale] == 'ru' %>
+        ПОКУПКА
+      <% else %>
+        SATYN ALMAK
+      <% end %>
+    </h1>
+
+
+
+</center>
+  <% if @purchase != nil %>
+    <div class="container" style="background-color: rgba(169,169,169, 0.2);">
+    <h1>
+    <%= @purchase.title_ru if params[:locale] != true and params[:locale] != 'tm' and params[:locale] != 'ru' %>
+    <%= @purchase.title_ru if params[:locale] == 'ru' %>
+    <%= @purchase.title_tm if params[:locale] == 'tm' %>
+    </h1>
+    <div class="card" style="width: 10rem;">
+    <% if @purchase.image.attached? %>
+      <%= image_tag(@purchase.image)%>
+    <% else %>
+      <%= image_tag(@no) %>
+    <% end %>
+    </div>
+    <hr>
+    <%= t('sales.brand')%><div><%= @brand.name %></div>
+    <hr>
+    <% if @purchase.model_id == nil %>
+      <%= t('sales.model')%><div><%= t('sales.nomodel')%></div>
+    <% else %>
+      <%= t('sales.model')%><div><%= @model.name %></div>
+    <% end %>
+    <hr>
+    <%= t('sales.year')%><div><%= @purchase.year %></div>
+    <hr>
+    <%= t('sales.price')%><div><%= @purchase.price %></div>
+    <hr>
+    <%= t('sales.about')%>
+    <div>
+      <%= @purchase.text_ru if params[:locale] != true and params[:locale] != 'tm' and params[:locale] != 'ru' %>
+      <%= @purchase.text_ru if params[:locale] == 'ru' %>
+      <%= @purchase.text_tm if params[:locale] == 'tm' %>
+    </div>
+    <hr>
+      <%= t('sales.phones')%><div><a href="tel:<%= @purchase.phone %>"><%= @purchase.phone %></a></div>
+    <hr>
+      E-mail:
+    <div>
+      <%= mail_to @purchase.email %>
+    </div>
+    <hr>
+    <%= check_box_tag 'admin', '1', @purchase.cashless, :disabled => true %><%= t('sales.cashless') %>
+    <hr>
+    <%= @region.name if params[:locale] != true and params[:locale] != 'tm' and params[:locale] != 'ru' %>
+    <%= @region.name if params[:locale] == 'ru' %>
+    <%= @region.name_tm if params[:locale] == 'tm' %>
+    <hr>
+    <div class="row">
+      <% @purchase.images.each do |image|%>
+        <div class="col-6 col-md-2">
+
+            <%= image_tag(image, class:'productsimages rounded open-popup')%>
+
+        </div>
+
+
+    <% end %>
+    </div>
+    <% elsif %>
+    <div class="parallax">
+      <%= image_tag(@dealdone, style:'width: 100%; opacity:.2;') %>
+      <center>
+      <div class="centered" style="margin-top: -500px">
+
+        <%= t('sale.sales')%>
+
+        <%= link_to root_path, class:'btn btn-light' do %>
+          <%= t('sale.sales_back')%>
+        <% end %>
+      </div>
+      </center>
+      </div>
+  <% end %>
+
+  </div>
+  <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br>
